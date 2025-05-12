@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -14,33 +15,13 @@ class LoginController extends Controller
     /**
      * Handle an authentication attempt.
      */
-    public function authenticate(Request $request)
+    public function authenticate(LoginRequest $request)
     {
-        $request->validate(
-            [
-                "email" => "required|email",
-                "password" => "required"
-            ]
-        );
 
-        $user = \App\Models\User::where("email", $request->email)->first();
+        Auth::attempt($request->only('email', 'password'));
 
-        if (!$user) {
-            throw ValidationException::withMessages([
-                "email" => "The provided credentials are incorrect"
-            ]);
-        }
+        $request->session()->regenerate();
 
-        if (!Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                "email" => "The provided credentials are incorrect"
-            ]);
-        }
-
-        $token = $user->createToken("api-token")->plainTextToken;
-
-        return response()->json([
-            "token" => $token,
-        ]);
+        return response()->json('Authenticated!');
     }
 }
