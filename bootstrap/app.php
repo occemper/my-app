@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Exceptions\Handler;
 use App\Http\Middleware\AppMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
@@ -14,6 +15,5 @@ return Application::configure(basePath: dirname(__DIR__))
     )
 
     ->withMiddleware(new AppMiddleware())
-    ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+    ->withExceptions(new Handler())
+    ->create();
