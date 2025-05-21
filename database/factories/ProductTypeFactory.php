@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ProductType>
  */
-class ProductFactory extends Factory
+class ProductTypeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +17,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'quantity'=>fake()->numberBetween(0,1285)
+            'name' => fake()->word(),
+            'description' => fake()->paragraphs(3, true)
         ];
     }
 }
