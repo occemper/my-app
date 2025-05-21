@@ -11,6 +11,11 @@ class ProductType extends Model
     /** @use HasFactory<\Database\Factories\ProductTypeFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'description'
+    ];
+
     public function product(): HasMany
     {
         return $this->hasMany(Product::class);

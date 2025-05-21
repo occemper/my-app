@@ -11,6 +11,10 @@ class Warehouse extends Model
     /** @use HasFactory<\Database\Factories\WarehouseFactory> */
     use HasFactory;
 
+    protected $fillable = [
+        'address'
+    ];
+
     public function product(): HasMany
     {
         return $this->hasMany(Product::class);
