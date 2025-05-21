@@ -17,7 +17,6 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->word(),
             'quantity'=>fake()->numberBetween(0,1285)
         ];
     }

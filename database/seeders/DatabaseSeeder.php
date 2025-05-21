@@ -3,7 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Product;
+use App\Models\ProductType;
 use App\Models\User;
+use App\Models\Warehouse;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -22,6 +24,21 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->create();
 
-        Product::factory(100)->create();
+        ProductType::factory(100)->create();
+        Warehouse::factory(100)->create();
+
+        $warehouses = ProductType::all()->shuffle();
+
+
+        foreach ($warehouses as $warehouse) {
+            $producTypes = ProductType::inRandomOrder()->take(rand(10, 50))->get();
+
+            foreach ($producTypes as $producType) {
+                Product::factory()->create([
+                    'product_type_id' => $producType->id,
+                    'warehouse_id' => $warehouse->id
+                ]);
+            }
+        }
     }
 }
