@@ -13,4 +13,6 @@ class ModelWithJson extends Model
     protected $fillable = [
         'col'
     ];
+
+    protected $casts = ['col'=>'array'];
 }

@@ -12,6 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\TextInput;
+
 
 class ModelWithJsonResource extends Resource
 {
@@ -23,9 +26,10 @@ class ModelWithJsonResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('col')
-                    ->required()
-                    ->columnSpanFull(),
+                Repeater::make('col')
+                    ->schema([
+                        TextInput::make('pole')
+                    ])
             ]);
     }
 
