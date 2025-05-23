@@ -60,10 +60,10 @@ return [
             'report' => false,
         ],
 
-        'categories' => [
-            'url' => env('APP_URL') . '/categories',
+        'images' => [
+            'url' => env('APP_URL') . '/images',
             'driver' => 'local',
-            'root' => storage_path('app/categories'),
+            'root' => storage_path('app/images'),
             'throw' => false,
             'visibility' => 'public',
         ],
@@ -84,7 +84,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('public') => storage_path('app/public'),
-        public_path('categories') => storage_path('app/categories'),
+        public_path('images') => storage_path('app/images'),
     ],
 
 ];
