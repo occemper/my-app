@@ -37,7 +37,7 @@ class ModelWithJsonResource extends Resource
                     ->imageEditor()
                     ->openable()
                     ->downloadable()
-                    ->disk('image')
+                    ->disk('img')
                     ->visibility('public')
                     ->label('Изображение')
                     ->multiple(),
@@ -46,7 +46,7 @@ class ModelWithJsonResource extends Resource
                     ->imageEditor()
                     ->openable()
                     ->downloadable()
-                    ->disk('image')
+                    ->disk('img')
                     ->visibility('public')
                     ->label('Изображение'),
                 DatePicker::make('date')->native(false)->displayFormat('d/m/Y'),
@@ -57,7 +57,14 @@ class ModelWithJsonResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->disk('img'),
+                Tables\Columns\ImageColumn::make('images')
+                    ->disk('img')
+                    ->stacked()
+                    ->circular()
+                    ->ring(5)
+                    ->overlap(1),
                 Tables\Columns\TextColumn::make('date')
                     ->date()
                     ->sortable(),
@@ -75,6 +82,7 @@ class ModelWithJsonResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make()
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

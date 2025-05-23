@@ -60,14 +60,20 @@ return [
             'report' => false,
         ],
 
-        'image' => [
-            'url' => env('APP_URL') . 'app/images',
+        'images' => [
+            'url' => env('APP_URL') . '/images',
             'driver' => 'local',
             'root' => storage_path('app/images'),
             'throw' => false,
             'visibility' => 'public',
         ],
-
+        'img' => [
+            'url' => env('APP_URL') . '/img',
+            'driver' => 'local',
+            'root' => storage_path('app\img'),
+            'throw' => false,
+            'visibility' => 'public',
+        ],
     ],
 
     /*
@@ -84,7 +90,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('public') => storage_path('app/public'),
-        public_path('image') => storage_path('app/image'),
+        public_path('img') => storage_path('app\img'),
     ],
 
 ];
