@@ -4,17 +4,17 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ModelWithJsonResource;
-use App\Models\ModelWithJson as ModelsModelWithJson;
+use App\Models\ModelWithJson;
 use Illuminate\Http\Request;
 
-class ModelWithJson extends Controller
+class ModelWithJsonController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return ModelWithJsonResource::collection(ModelsModelWithJson::all());
+        return ModelWithJsonResource::collection(ModelWithJson::all());
     }
 
     /**
@@ -22,7 +22,7 @@ class ModelWithJson extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -30,8 +30,23 @@ class ModelWithJson extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+
+            'image' => 'required|image|max:4096'
+        ]);
+
+        $image = $request->file('image');
+        $path = $image->store('jpg', 'local');
+
+        ModelWithJson::create([
+            ...$request->validate(['col' => 'required|json', 'images' => 'required|json']),
+
+            'image' => $path,
+        ]);
+
+        return redirect()->route('/');
     }
+
 
     /**
      * Display the specified resource.

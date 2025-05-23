@@ -11,8 +11,11 @@ class ModelWithJson extends Model
     use HasFactory;
 
     protected $fillable = [
-        'col'
+        'col',
+        'images',
+        'image',
+        'date'
     ];
 
-    protected $casts = ['col'=>'array'];
+    protected $casts = ['col' => 'array', 'images' => 'array'];
 }

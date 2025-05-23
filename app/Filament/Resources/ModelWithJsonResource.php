@@ -6,14 +6,14 @@ use App\Filament\Resources\ModelWithJsonResource\Pages;
 use App\Filament\Resources\ModelWithJsonResource\RelationManagers;
 use App\Models\ModelWithJson;
 use Filament\Forms;
+use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\TextInput;
 
 
 class ModelWithJsonResource extends Resource
@@ -26,10 +26,31 @@ class ModelWithJsonResource extends Resource
     {
         return $form
             ->schema([
-                Repeater::make('col')
-                    ->schema([
-                        TextInput::make('pole')
-                    ])
+                Forms\Components\Repeater::make('col')
+                    ->required()
+                    ->columnSpanFull()
+                    ->schema(
+                        [Forms\Components\TextInput::make('cccoooll')]
+                    ),
+                FileUpload::make('images')
+                    ->image()
+                    ->imageEditor()
+                    ->openable()
+                    ->downloadable()
+                    ->disk('categories')
+                    ->visibility('public')
+                    ->label('Изображение')
+                    ->multiple(),
+                FileUpload::make('image')
+                    ->image()
+                    ->imageEditor()
+                    ->openable()
+                    ->downloadable()
+                    ->disk('categories')
+                    ->visibility('public')
+                    ->label('Изображение'),
+                DatePicker::make('date')->native(false)->displayFormat('d/m/Y')
+
             ]);
     }
 
@@ -37,6 +58,16 @@ class ModelWithJsonResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\ImageColumn::make('image')
+
+                    ->disk('categories')
+                    ->visibility('public'),
+                Tables\Columns\ImageColumn::make('images')
+                    ->circular()
+                    ->stacked()
+                    ->limit(3)
+                    ->limitedRemainingText(size: 'lg')
+                    ->disk('categories'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -45,6 +76,9 @@ class ModelWithJsonResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('date')
+                    ->dateTime()
+                    ->sortable()
             ])
             ->filters([
                 //
