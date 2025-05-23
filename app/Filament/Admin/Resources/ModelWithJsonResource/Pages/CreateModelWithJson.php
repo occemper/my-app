@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\ModelWithJsonResource\Pages;
+namespace App\Filament\Admin\Resources\ModelWithJsonResource\Pages;
 
-use App\Filament\Resources\ModelWithJsonResource;
+use App\Filament\Admin\Resources\ModelWithJsonResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 

@@ -60,8 +60,8 @@ return [
             'report' => false,
         ],
 
-        'images' => [
-            'url' => env('APP_URL') . '/images',
+        'image' => [
+            'url' => env('APP_URL') . 'app/images',
             'driver' => 'local',
             'root' => storage_path('app/images'),
             'throw' => false,
@@ -84,7 +84,7 @@ return [
     'links' => [
         public_path('storage') => storage_path('app/public'),
         public_path('public') => storage_path('app/public'),
-        public_path('images') => storage_path('app/images'),
+        public_path('image') => storage_path('app/image'),
     ],
 
 ];

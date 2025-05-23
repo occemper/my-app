@@ -1,20 +1,20 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace App\Filament\Admin\Resources;
 
-use App\Filament\Resources\ModelWithJsonResource\Pages;
-use App\Filament\Resources\ModelWithJsonResource\RelationManagers;
+use App\Filament\Admin\Resources\ModelWithJsonResource\Pages;
+use App\Filament\Admin\Resources\ModelWithJsonResource\RelationManagers;
 use App\Models\ModelWithJson;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-
 
 class ModelWithJsonResource extends Resource
 {
@@ -26,7 +26,7 @@ class ModelWithJsonResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Repeater::make('col')
+                Repeater::make('col')
                     ->required()
                     ->columnSpanFull()
                     ->schema(
@@ -37,7 +37,7 @@ class ModelWithJsonResource extends Resource
                     ->imageEditor()
                     ->openable()
                     ->downloadable()
-                    ->disk('images')
+                    ->disk('image')
                     ->visibility('public')
                     ->label('Изображение')
                     ->multiple(),
@@ -46,11 +46,10 @@ class ModelWithJsonResource extends Resource
                     ->imageEditor()
                     ->openable()
                     ->downloadable()
-                    ->disk('images')
+                    ->disk('image')
                     ->visibility('public')
                     ->label('Изображение'),
-                DatePicker::make('date')->native(false)->displayFormat('d/m/Y')
-
+                DatePicker::make('date')->native(false)->displayFormat('d/m/Y'),
             ]);
     }
 
@@ -58,16 +57,10 @@ class ModelWithJsonResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('image')
-
-                    ->disk('images')
-                    ->visibility('public'),
-                Tables\Columns\ImageColumn::make('images')
-                    ->circular()
-                    ->stacked()
-                    ->limit(3)
-                    ->limitedRemainingText(size: 'lg')
-                    ->disk('images'),
+                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\TextColumn::make('date')
+                    ->date()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -76,9 +69,6 @@ class ModelWithJsonResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('date')
-                    ->dateTime()
-                    ->sortable()
             ])
             ->filters([
                 //
